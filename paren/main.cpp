@@ -36,8 +36,8 @@ int main()
 	using namespace std;
 	string str;
 	cin >> str;
-	const char* exp = str.c_str();
-	if (paren(exp, 0, str.size()))
+
+	if (paren(str.data(), 0, str.size()))
 		cout << "Match";
 	else
 		cout << "Not Match";
