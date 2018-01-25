@@ -1,12 +1,13 @@
 #include "stack.h"
 #include <iostream>
+#include <string>
 
-bool paren(const char exp[], int lo, int hi)
+bool paren(const char exp[], int lo, int hi)  //输入char数组exp[lo,hi),
 { //表达式括号匹配检查，可兼顾三种括号
 	Stack<char> S; //使用栈记录已发现但尚未匹配的左括号
-	for (int i = lo; i <= hi; i++) /* 逐一检查当前字符 */
+	for (int i = lo; i < hi; i++) /* 逐一检查当前字符 */
 		switch (exp[i])
-		{ //左括号直接进栈；右括号若与栈顶失配，则表达式必不匹配
+		{ //左括号直接进栈；右括号若与栈顶失配，则表达式必不匹配；若右括号与栈顶左括号匹配，则弹出栈顶左括号
 		case '(':
 		case '[':
 		case '{':
@@ -15,12 +16,15 @@ bool paren(const char exp[], int lo, int hi)
 		case ')':
 			if ((S.empty()) || ('(' != S.pop()))
 				return false;
+			break;
 		case ']':
 			if ((S.empty()) || ('[' != S.pop()))
 				return false;
+			break;
 		case '}':
 			if ((S.empty()) || ('{' != S.pop()))
 				return false;
+			break;
 		default:
 			break; //非括号字符一律忽略
 		}
@@ -30,7 +34,15 @@ bool paren(const char exp[], int lo, int hi)
 int main()
 {
 	using namespace std;
+	string str;
+	cin >> str;
+	const char* exp = str.c_str();
+	if (paren(exp, 0, str.size()))
+		cout << "Match";
+	else
+		cout << "Not Match";
 
+	cin.get();
 	cin.get();
 	return 0;
 }

@@ -33,6 +33,7 @@ public:
 	Vector(int c = DEFAULT_CAPACITY, int s = 0, T v = 0) //容量为c、规模为s、所有元素初始为v. 缺省时_size为0，_capacity为3.
 	{
 		_elem = new T[_capacity = c];
+		_elem[0] = 0;
 		for (_size = 0; _size < s; _elem[_size++] = v);
 	} //s<=c
 
@@ -354,14 +355,14 @@ Rank Vector<T>::insert(Rank r, T const& e)
 
 
 template <typename T>
-int Vector<T>::remove(Rank lo, Rank hi) //初除匙间[lo, hi)
+int Vector<T>::remove(Rank lo, Rank hi) //初除区间[lo, hi)
 {
 	if (lo == hi) return 0; //出于效率考虑，单独处理退化情况，比如remove(0, 0)
 	while (hi < _size)
 		_elem[lo++] = _elem[hi++]; //[hi, _size)顺次前移hi - lo个单元
 	_size = lo; //更新规模，直接丢弃尾部[lo, _size = hi)区间
 	shrink(); //若有必要，则缩容
-	return hi - lo; //返回被初除元素癿数目
+	return hi - lo; //返回被初除元素的数目
 }
 
 
